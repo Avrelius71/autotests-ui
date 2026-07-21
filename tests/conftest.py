@@ -1,5 +1,8 @@
 import pytest
 from playwright.sync_api import sync_playwright, Page, Playwright
+pytest_plugins = (
+    "fixtures.pages" # Подключаем фикстуры страниц
+)
 
 
 @pytest.fixture(scope='session')
