@@ -18,6 +18,11 @@ def registration_page(chromium_page: Page) -> RegistrationPage:
 
 
 @pytest.fixture
+def dashboard_page(chromium_page: Page) -> DashboardPage:
+    return DashboardPage(page=chromium_page)
+
+
+@pytest.fixture
 def dashboard_page_with_state(chromium_page_with_state: Page) -> DashboardPage:
     return DashboardPage(page=chromium_page_with_state)
 
