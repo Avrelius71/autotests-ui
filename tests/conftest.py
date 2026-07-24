@@ -1,5 +1,6 @@
 import pytest
 from playwright.sync_api import Page, Playwright
+from pages.authentication.registration_page import RegistrationPage
 pytest_plugins = (
     "fixtures.pages" # Подключаем фикстуры страниц
 )
@@ -10,15 +11,10 @@ def initialize_browser_state(playwright: Playwright):
     browser = playwright.chromium.launch(headless=False)
     context = browser.new_context()
     page = context.new_page()
-    page.goto('https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration')
-    email_input = page.get_by_test_id('registration-form-email-input').locator('input')
-    user_name_input = page.get_by_test_id('registration-form-username-input').locator('input')
-    password_input = page.get_by_test_id('registration-form-password-input').locator('input')
-    email_input.fill('testtest@ya.ru')
-    user_name_input.fill('test')
-    password_input.fill('testpassword')
-    registration_button = page.get_by_test_id('registration-page-registration-button')
-    registration_button.click()
+    registration_page = RegistrationPage(page)
+    registration_page.visit('https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration')
+    registration_page.registration_form.fill(email='testtest@ya.ru', username='test', password='testpassword')
+    registration_page.click_registration_button()
     context.storage_state(path="browser-state.json")
     page.close()
     context.close()
