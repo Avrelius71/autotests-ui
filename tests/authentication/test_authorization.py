@@ -2,11 +2,26 @@ import pytest
 from pages.authentication.login_page import LoginPage
 from pages.authentication.registration_page import RegistrationPage
 from pages.dashboard.dashboard_page import DashboardPage
+import allure
+from tools.epic import AllureEpic
+from tools.story import AllureStory
+from tools.feature import AllureFeature
+from tools.tags import AllureTag
+from allure_commons.types import Severity
 
 
+@allure.epic(AllureEpic.LMS)
+@allure.feature(AllureFeature.AUTHENTICATION)
+@allure.story(AllureStory.AUTHORIZATION)
+@allure.parent_suite(AllureEpic.LMS)
+@allure.suite(AllureFeature.AUTHENTICATION)
+@allure.sub_suite(AllureStory.AUTHORIZATION)
+@allure.tag(AllureTag.REGRESSION, AllureTag.AUTHORIZATION)
 @pytest.mark.regression
 @pytest.mark.authorization
 class TestAuthorization:
+    @allure.severity(Severity.BLOCKER)
+    @allure.title('Авторизация с валидными данными')
     def test_successful_authorization(
             self,
             login_page: LoginPage,
@@ -38,12 +53,17 @@ class TestAuthorization:
             ("  ", "password")
         ]
     )
+    @allure.severity(Severity.CRITICAL)
+    @allure.title('Авторизация с невалидными email и password')
     def test_wrong_email_or_password_authorization(self, login_page: LoginPage, email: str, password: str):
         login_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login")
         login_page.login_form.fill(email=email, password=password)
         login_page.click_login_button()
         login_page.check_visible_wrong_email_or_password_alert()
 
+    @allure.severity(Severity.NORMAL)
+    @allure.tag(AllureTag.NAVIGATION)
+    @allure.title('Проверка навигации из авторизации в регистрацию')
     def test_navigate_from_authorization_to_registration(
             self,
             login_page: LoginPage,

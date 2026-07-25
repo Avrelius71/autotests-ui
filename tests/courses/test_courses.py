@@ -3,13 +3,29 @@ from pathlib import Path
 import pytest
 from pages.courses.create_courses_page import CreateCoursePage
 from pages.courses.courses_list_page import CoursesListPage
+import allure
+from tools.epic import AllureEpic
+from tools.story import AllureStory
+from tools.feature import AllureFeature
+from tools.tags import AllureTag
+from allure_commons.types import Severity
+
 
 IMAGE_FILE = Path(__file__).resolve().parents[2] / "testdata" / "files" / "image.png"
 
 
+@allure.epic(AllureEpic.LMS)
+@allure.feature(AllureFeature.COURSES)
+@allure.story(AllureStory.COURSES)
+@allure.parent_suite(AllureEpic.LMS)
+@allure.suite(AllureFeature.COURSES)
+@allure.sub_suite(AllureStory.COURSES)
+@allure.tag(AllureTag.REGRESSION, AllureTag.COURSES)
 @pytest.mark.courses
 @pytest.mark.regression
 class TestCourses:
+    @allure.severity(Severity.BLOCKER)
+    @allure.title('Создание курса с валидными данными')
     def test_create_course(
             self,
             create_course_page: CreateCoursePage,
@@ -51,6 +67,9 @@ class TestCourses:
             min_score="10"
         )
 
+
+    @allure.severity(Severity.BLOCKER)
+    @allure.title('Редактирование курса с валидными данными')
     def test_edit_course(
             self,
             create_course_page: CreateCoursePage,
@@ -88,6 +107,9 @@ class TestCourses:
             min_score="20"
         )
 
+
+    @allure.severity(Severity.BLOCKER)
+    @allure.title('Проверка страницы с курсами')
     def test_empty_courses_list(self, courses_list_page: CoursesListPage):
         courses_list_page.visit(
             'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses'

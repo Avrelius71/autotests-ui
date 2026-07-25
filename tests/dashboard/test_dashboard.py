@@ -1,10 +1,25 @@
 import pytest
 from pages.dashboard.dashboard_page import DashboardPage
+import allure
+from tools.epic import AllureEpic
+from tools.story import AllureStory
+from tools.feature import AllureFeature
+from tools.tags import AllureTag
+from allure_commons.types import Severity
 
 
+@allure.epic(AllureEpic.LMS)
+@allure.feature(AllureFeature.DASHBOARD)
+@allure.story(AllureStory.DASHBOARD)
+@allure.parent_suite(AllureEpic.LMS)
+@allure.suite(AllureFeature.DASHBOARD)
+@allure.sub_suite(AllureStory.DASHBOARD)
+@allure.tag(AllureTag.REGRESSION, AllureTag.DASHBOARD)
 @pytest.mark.dashboard
 @pytest.mark.regression
 class TestDashboard:
+    @allure.severity(Severity.BLOCKER)
+    @allure.title('Прроверка страницы Дашборд')
     def test_dashboard_displaying(self, dashboard_page_with_state: DashboardPage):
         dashboard_page_with_state.visit(
             "https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/dashboard"

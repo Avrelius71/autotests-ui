@@ -1,11 +1,26 @@
 import pytest
 from pages.authentication.registration_page import RegistrationPage
 from pages.dashboard.dashboard_page import DashboardPage
+import allure
+from tools.epic import AllureEpic
+from tools.story import AllureStory
+from tools.feature import AllureFeature
+from tools.tags import AllureTag
+from allure_commons.types import Severity
 
 
+@allure.epic(AllureEpic.LMS)
+@allure.feature(AllureFeature.AUTHENTICATION)
+@allure.story(AllureStory.REGISTRATION)
+@allure.parent_suite(AllureEpic.LMS)
+@allure.suite(AllureFeature.AUTHENTICATION)
+@allure.sub_suite(AllureStory.REGISTRATION)
+@allure.tag(AllureTag.REGRESSION, AllureTag.REGISTRATION)
 @pytest.mark.registration
 @pytest.mark.regression
 class TestRegistration:
+    @allure.severity(Severity.BLOCKER)
+    @allure.title('Регистрация с валидными данными')
     def test_successful_registration(
             self,
             registration_page: RegistrationPage,
