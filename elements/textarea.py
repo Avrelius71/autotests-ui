@@ -1,19 +1,23 @@
+import allure
 from playwright.sync_api import Locator, expect
 
 from elements.base_element import BaseElement
 
 
 class Textarea(BaseElement):
+    @property
+    def type_of(self) -> str:
+        return "текстовое поле"
+
     def get_locator(self, nth: int = 0, **kwargs) -> Locator:
-        # Добавили аргумент nth и передаем его в get_locator
         return super().get_locator(nth, **kwargs).locator('textarea').first
 
     def fill(self, value: str, nth: int = 0, **kwargs):
-        # Добавили аргумент nth и передаем его в get_locator
-        locator = self.get_locator(nth, **kwargs)
-        locator.fill(value)
+        with allure.step(f'Заполнить {self.type_of} "{self.name}" значением "{value}"'):  # Добавили шаг
+            locator = self.get_locator(nth, **kwargs)
+            locator.fill(value)
 
     def check_have_value(self, value: str, nth: int = 0, **kwargs):
-        # Добавили аргумент nth и передаем его в get_locator
-        locator = self.get_locator(nth, **kwargs)
-        expect(locator).to_have_value(value)
+        with allure.step(f'Проверить, что {self.type_of} "{self.name}" имеет значение "{value}"'):  # Добавили шаг
+            locator = self.get_locator(nth, **kwargs)
+            expect(locator).to_have_value(value)

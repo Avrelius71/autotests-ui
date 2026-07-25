@@ -1,5 +1,6 @@
 from typing import Pattern
 
+import allure
 from playwright.sync_api import Page, expect
 
 
@@ -8,11 +9,13 @@ class BasePage:
         self.page = page
 
     def visit(self, url: str):
-        self.page.goto(url, wait_until='networkidle')
+        with allure.step(f'Открыть URL "{url}"'): # Добавили allure.step
+            self.page.goto(url, wait_until='networkidle')
 
     def reload(self):
-        self.page.reload(wait_until='domcontentloaded')
+        with allure.step(f'Перезагрузить страницу с URL "{self.page.url}"'): # Добавили allure.step
+            self.page.reload(wait_until='domcontentloaded')
 
-    # Метод для проверки текущего URL
     def check_current_url(self, expected_url: Pattern[str]):
-        expect(self.page).to_have_url(expected_url)
+        with allure.step(f'Проверить, что текущий URL соответствует шаблону "{expected_url.pattern}"'): # Добавили allure.step
+            expect(self.page).to_have_url(expected_url)
