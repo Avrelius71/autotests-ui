@@ -9,6 +9,7 @@ from config import settings
 
 pytest_plugins = (
     "fixtures.pages",
+    "fixtures.allure"
 )
 
 
