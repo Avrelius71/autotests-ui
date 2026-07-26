@@ -1,10 +1,12 @@
 import pytest
 from pages.dashboard.dashboard_page import DashboardPage
 import allure
+from config import settings
 from tools.epic import AllureEpic
 from tools.story import AllureStory
 from tools.feature import AllureFeature
 from tools.tags import AllureTag
+from tools.routes import AppRoute
 from allure_commons.types import Severity
 
 
@@ -21,11 +23,9 @@ class TestDashboard:
     @allure.severity(Severity.BLOCKER)
     @allure.title('Прроверка страницы Дашборд')
     def test_dashboard_displaying(self, dashboard_page_with_state: DashboardPage):
-        dashboard_page_with_state.visit(
-            "https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/dashboard"
-        )
+        dashboard_page_with_state.visit(AppRoute.DASHBOARD)
         dashboard_page_with_state.sidebar.check_visible()
-        dashboard_page_with_state.navbar.check_visible("test")
+        dashboard_page_with_state.navbar.check_visible(settings.test_user.username)
         dashboard_page_with_state.dashboard_toolbar_view.check_visible()
         dashboard_page_with_state.scores_chart_view.check_visible("Scores")
         dashboard_page_with_state.courses_chart_view.check_visible("Courses")
