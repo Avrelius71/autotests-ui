@@ -62,7 +62,6 @@ class TestCourses:
             min_score="10"
         )
 
-
     @allure.severity(Severity.BLOCKER)
     @allure.title('Редактирование курса с валидными данными')
     def test_edit_course(
@@ -99,7 +98,6 @@ class TestCourses:
             max_score="200",
             min_score="20"
         )
-
 
     @allure.severity(Severity.BLOCKER)
     @allure.title('Проверка страницы с курсами')
