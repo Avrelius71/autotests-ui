@@ -1,0 +1,16 @@
+INFO     BASE_PAGE:base_page.py:19 Открыть URL "AppRoute.LOGIN"
+INFO     BASE_ELEMENT:base_element.py:24 Getting locator with "data-testid=login-page-registration-link" at index "0"
+INFO     BASE_ELEMENT:base_element.py:32 Clicking ссылка "Registration"
+INFO     BASE_PAGE:base_page.py:33 Проверить, что текущий URL соответствует шаблону ".*/#/auth/registration"
+INFO     BASE_ELEMENT:base_element.py:24 Getting locator with "data-testid=registration-form-email-input" at index "0"
+INFO     BASE_ELEMENT:base_element.py:40 Checking that поле ввода "Email" is visible
+INFO     BASE_ELEMENT:base_element.py:24 Getting locator with "data-testid=registration-form-email-input" at index "0"
+INFO     INPUT:input.py:31 Проверить, что поле ввода "Email" имеет значение ""
+INFO     BASE_ELEMENT:base_element.py:24 Getting locator with "data-testid=registration-form-username-input" at index "0"
+INFO     BASE_ELEMENT:base_element.py:40 Checking that поле ввода "Username" is visible
+INFO     BASE_ELEMENT:base_element.py:24 Getting locator with "data-testid=registration-form-username-input" at index "0"
+INFO     INPUT:input.py:31 Проверить, что поле ввода "Username" имеет значение ""
+INFO     BASE_ELEMENT:base_element.py:24 Getting locator with "data-testid=registration-form-password-input" at index "0"
+INFO     BASE_ELEMENT:base_element.py:40 Checking that поле ввода "Password" is visible
+INFO     BASE_ELEMENT:base_element.py:24 Getting locator with "data-testid=registration-form-password-input" at index "0"
+INFO     INPUT:input.py:31 Проверить, что поле ввода "Password" имеет значение ""
