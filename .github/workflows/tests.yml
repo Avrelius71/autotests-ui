@@ -8,6 +8,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  pages: write
+
 jobs:
   run-tests:
     runs-on: ubuntu-latest
@@ -42,11 +46,12 @@ jobs:
 
       # Генерируем HTML-отчет и обновляем историю
       - name: Generate Coverage report
+        if: always()
         run: |
           ui-coverage-tool save-report
 
       # Сохраняем историю обратно в кеш
-      - name: Cache Coverage  history
+      - name: Cache Coverage history
         if: always()
         uses: actions/cache/save@v4
         with:
@@ -70,16 +75,20 @@ jobs:
 
 
   publish-report:
-    if: always()
+    if: always() && needs.run-tests.result != 'cancelled'
     needs: [ run-tests ]
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
+      - name: Get Allure history
         uses: actions/checkout@v4
+        continue-on-error: true
         with:
           ref: gh-pages
           path: gh-pages
+
+      - name: Prepare gh-pages directory
+        run: mkdir -p gh-pages
 
       - name: Download Allure results
         uses: actions/download-artifact@v4
@@ -87,15 +96,16 @@ jobs:
           name: allure-results
           path: allure-results
 
-      - name: Generates Allure Report with history
-        uses: simple-elf/allure-report-action@v1.7
+      - name: Generate Allure Report with history
+        uses: simple-elf/allure-report-action@v1.15
         if: always()
         with:
           allure_results: allure-results
+          gh_pages: gh-pages
           allure_history: allure-history
 
       - name: Deploy report to Github Pages
-        if: always()
+        if: success()
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
