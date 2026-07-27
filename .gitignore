@@ -5,3 +5,5 @@ allure-results
 videos
 tracing
 *.json
+coverage-results
+coverage.html

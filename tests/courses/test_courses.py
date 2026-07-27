@@ -55,7 +55,7 @@ class TestCourses:
         create_course_page.create_course_toolbar_view.click_create_course_button()
         courses_list_page.toolbar_view.check_visible()
         courses_list_page.course_view.check_visible(
-            index='0',
+            index=0,
             title="Playwright",
             estimated_time="2 weeks",
             max_score="100",
@@ -92,7 +92,7 @@ class TestCourses:
         create_course_page.create_course_toolbar_view.click_create_course_button()
         courses_list_page.toolbar_view.check_visible()
         courses_list_page.course_view.check_visible(
-            index='0',
+            index=0,
             title="Playwright-test",
             estimated_time="3 weeks",
             max_score="200",
